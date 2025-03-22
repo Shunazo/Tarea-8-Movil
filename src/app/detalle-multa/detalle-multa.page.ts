@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonLabel, IonItem, IonList } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonLabel, IonItem, IonList, IonButton } from '@ionic/angular/standalone';
 import { Storage } from '@ionic/storage-angular';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-detalle-multa',
   templateUrl: './detalle-multa.page.html',
   styleUrls: ['./detalle-multa.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonLabel, IonItem, IonList]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonLabel, IonItem, IonList, IonButton, RouterLink]
 })
 export class DetalleMultaPage {
   multa: any;
@@ -32,7 +32,7 @@ export class DetalleMultaPage {
       this.multa = storedMultas.find((m: any) => m.id === multaId);
       if (this.multa && this.multa.audio) {
 
-        this.audioUrl = `data:audio/wav;base64,${this.multa.audio}`;
+        this.audioUrl = this.multa.audio;
       }
     }
   }

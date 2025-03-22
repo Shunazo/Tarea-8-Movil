@@ -14,8 +14,10 @@ export class ServiciomultaService {
 
   async init() {
     this._storage = await this.storage.create();
-    this.multas = (await this._storage.get('multas')) || [];
+    const storedMultas = await this._storage.get('multas');
+    this.multas = Array.isArray(storedMultas) ? storedMultas : [];  // Ensure it's always an array
   }
+  
 
   // Fetch all stored multas
   async getMultas() {
@@ -30,9 +32,15 @@ export class ServiciomultaService {
   // Create a new multa
   async createMulta(multa: any) {
     multa.id = uuidv4();
+    
+    if (!Array.isArray(this.multas)) {
+      this.multas = []; // Ensure multas is an array
+    }
+  
     this.multas.push(multa);
     await this._storage?.set('multas', this.multas);
-    }
+  }
+  
 
   // Take a photo and return the image path
   async takePhoto() {
